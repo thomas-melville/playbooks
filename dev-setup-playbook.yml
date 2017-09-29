@@ -39,3 +39,10 @@
         chdir: "{{ src_home }}/git-2.14.0"
     - name: get my git config
       shell: curl https://raw.githubusercontent.com/ethomev/.configuration/master/.gitconfig --create-dirs -o ~/.config/git/config
+    - name: download intellij
+      unarchive:
+        src: https://download.jetbrains.com/idea/ideaIC-2017.2.5.tar.gz
+        dest: /opt
+        remote_src: yes
+      become: true
+      become_user: root
