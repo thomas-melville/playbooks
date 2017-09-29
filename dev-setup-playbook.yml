@@ -1,9 +1,9 @@
 ---
-- hosts: default
-  user: vagrant
+- hosts: default # This will change to localhost and I will need to add entry to ansible hosts file
+  user: vagrant # this will change to ethomev
   vars:
-    home: /home/vagrant
-    src_home: /home/vagrant/repos
+    home: /home/vagrant # ethomev
+    src_home: /home/vagrant/repos # ethomev
   tasks:
     - name: create src folder
       file: 
@@ -45,6 +45,8 @@
         chdir: "{{ src_home }}/git-2.14.0"
     - name: get my git config
       shell: curl https://raw.githubusercontent.com/ethomev/.configuration/master/.gitconfig --create-dirs -o ~/.config/git/config
+    - name: get my gitignore file
+      shell: curl https://raw.githubusercontent.com/ethomev/.configuration/master/.gitignore --create-dirs -o ~/.config/git/ignore
     - name: get dmitry's fish config
       shell: curl https://raw.githubusercontent.com/dmi3/bin/master/config/fish/config.fish --create-dirs -o ~/.config/fish/config.fish
     - name: download intellij
