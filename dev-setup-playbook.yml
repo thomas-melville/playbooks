@@ -1,0 +1,12 @@
+---
+- hosts: default
+  sudo: yes
+  tasks:
+    - name: Install libraries with apt
+      apt: 
+        name: "{{ item }}"
+        update_cache: yes
+      with_items:
+        - maven
+        - default-jdk 
+        - git
