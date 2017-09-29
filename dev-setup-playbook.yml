@@ -11,6 +11,11 @@
         state: directory
     - name: update apt-get for sublime
       shell: 'echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list'
+    - name: add fish ppa
+      apt_repository:
+        repo: 'ppa:fish-shell/release-2'
+      become: true
+      become_user: root
     - name: Install libraries with apt
       apt: 
         name: "{{ item }}"
@@ -28,6 +33,7 @@
         - gettext
         - libssl-dev
         - sublime-text
+        - fish
     - name: extract git
       unarchive:
         src: https://github.com/git/git/archive/v2.14.0.tar.gz 
@@ -39,6 +45,8 @@
         chdir: "{{ src_home }}/git-2.14.0"
     - name: get my git config
       shell: curl https://raw.githubusercontent.com/ethomev/.configuration/master/.gitconfig --create-dirs -o ~/.config/git/config
+    - name: get dmitry's fish config
+      shell: curl https://raw.githubusercontent.com/dmi3/bin/master/config/fish/config.fish --create-dirs -o ~/.config/fish/config.fish
     - name: download intellij
       unarchive:
         src: https://download.jetbrains.com/idea/ideaIC-2017.2.5.tar.gz
