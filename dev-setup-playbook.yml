@@ -9,10 +9,13 @@
       file: 
         path: "{{ src_home }}" 
         state: directory
+    - name: update apt-get for sublime
+      shell: 'echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list'
     - name: Install libraries with apt
       apt: 
         name: "{{ item }}"
         update_cache: yes
+        allow_unauthenticated: yes
       become: true
       become_user: root
       with_items:
@@ -24,6 +27,7 @@
         - tcl-dev
         - gettext
         - libssl-dev
+        - sublime-text
     - name: extract git
       unarchive:
         src: https://github.com/git/git/archive/v2.14.0.tar.gz 
@@ -33,3 +37,5 @@
       shell: make; make install
       args:
         chdir: "{{ src_home }}/git-2.14.0"
+    - name: get my git config
+      shell: curl https://raw.githubusercontent.com/ethomev/.configuration/master/.gitconfig --create-dirs -o ~/.config/git/config
