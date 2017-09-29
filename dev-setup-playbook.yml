@@ -1,12 +1,35 @@
 ---
 - hosts: default
-  sudo: yes
+  user: vagrant
+  vars:
+    home: /home/vagrant
+    src_home: /home/vagrant/repos
   tasks:
+    - name: create src folder
+      file: 
+        path: "{{ src_home }}" 
+        state: directory
     - name: Install libraries with apt
       apt: 
         name: "{{ item }}"
         update_cache: yes
+      become: true
+      become_user: root
       with_items:
         - maven
         - default-jdk 
         - git
+        - libcurl4-openssl-dev
+        - libexpat1-dev
+        - tcl-dev
+        - gettext
+        - libssl-dev
+    - name: extract git
+      unarchive:
+        src: https://github.com/git/git/archive/v2.14.0.tar.gz 
+        dest: "{{ src_home }}"
+        remote_src: yes
+    - name: install latest version
+      shell: make; make install
+      args:
+        chdir: "{{ src_home }}/git-2.14.0"
