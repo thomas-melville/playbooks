@@ -51,8 +51,12 @@
       shell: curl https://raw.githubusercontent.com/dmi3/bin/master/config/fish/config.fish --create-dirs -o ~/.config/fish/config.fish
     - name: download intellij
       unarchive:
-        src: https://download.jetbrains.com/idea/ideaIC-2017.2.5.tar.gz
+        src: https://download.jetbrains.com/idea/ideaIC-2017.2.5.tar.gz # extract version to a variable?
         dest: /opt
         remote_src: yes
       become: true
       become_user: root
+    - name: pull down my notes
+      git:
+        dest: "{{ src_home }}/myNotes"
+        repo: https://github.com/ethomev/myNotes.git 
