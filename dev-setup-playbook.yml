@@ -60,3 +60,7 @@
       git:
         dest: "{{ src_home }}/myNotes"
         repo: https://github.com/ethomev/myNotes.git 
+    - name: copy settings.xml file for maven
+      copy:
+        src: settings.xml
+        dest: "{{ home }}/.m2/settings.xml"
