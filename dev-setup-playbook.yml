@@ -5,17 +5,23 @@
     home: /home/vagrant # ethomev
     src_home: /home/vagrant/repos # ethomev
   tasks:
-    - name: create src folder
+    - name: "create src {{ item }}"
       file: 
-        path: "{{ src_home }}" 
+        path: "{{ item }}" 
         state: directory
+      with_items:
+        - /home/vagrant/repos
+        - /home/vagrant/.m2
     - name: update apt-get for sublime
       shell: 'echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list'
-    - name: add fish ppa
+    - name: add extra apt-get repositories 
       apt_repository:
-        repo: 'ppa:fish-shell/release-2'
+        repo: "{{ item }}"
       become: true
       become_user: root
+      with_items:
+        - 'ppa:fish-shell/release-2'
+        - 'ppa:openjdk-r/ppa'
     - name: Install libraries with apt
       apt: 
         name: "{{ item }}"
@@ -34,6 +40,7 @@
         - libssl-dev
         - sublime-text
         - fish
+        - openjdk-7-jdk
     - name: extract git
       unarchive:
         src: https://github.com/git/git/archive/v2.14.0.tar.gz 
