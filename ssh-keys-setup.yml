@@ -1,16 +1,18 @@
 ---
 - hosts: default
-  user: vagrant # can I reference this in the tasks so I'm not repeating the user, if all else fails make it a variable
+  vars:
+    username: vagrant
+  user: "{{ username }}" # can I reference this in the tasks so I'm not repeating the user, if all else fails make it a variable
   tasks:
     - name: generate ssh key
       user: 
-        name: vagrant
+        name: "{{ username }}"
         generate_ssh_key: yes
         ssh_key_bits: 4096
         comment: 'thomas.melville@ericsson.com'
-        ssh_key_file: /home/vagrant/.ssh/id_rsa
+        ssh_key_file: "/home/{{ username }}/.ssh/id_rsa"
       become: true
       become_user: root
     - name: add key to agent
-      shell: 'eval "$(ssh-agent -s)"; ssh-add /home/vagrant/.ssh/id_rsa;'
+      shell: 'eval "$(ssh-agent -s)"; ssh-add /home/{{ username }}/.ssh/id_rsa;'
 

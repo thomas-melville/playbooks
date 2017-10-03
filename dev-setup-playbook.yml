@@ -1,18 +1,19 @@
 ---
 - hosts: default # This will change to localhost and I will need to add entry to ansible hosts file
-  user: vagrant # this will change to ethomev
   vars:
-    home: /home/vagrant # ethomev
-    src_home: /home/vagrant/repos # ethomev
+    username: vagrant
+    home: "/home/{{ username }}"
+    src_home: "{{ username }}/repos"
+  user: "{{ username }}"
   tasks:
     - name: "create src {{ item }}"
       file: 
         path: "{{ item }}" 
         state: directory
       with_items:
-        - /home/vagrant/repos
-        - /home/vagrant/.m2
-        - /home/vagrant/.IdeaIC2017.2
+        - "/home/{{ username }}/repos"
+        - "/home/{{ username }}/.m2"
+        - "/home/{{ username }}/.IdeaIC2017.2"
     - name: update apt-get for sublime
       shell: 'echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list'
     - name: add extra apt-get repositories 
