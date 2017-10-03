@@ -3,7 +3,7 @@
   vars:
     username: vagrant
     home: "/home/{{ username }}"
-    src_home: "{{ username }}/repos"
+    src_home: "{{ home }}/repos"
   user: "{{ username }}"
   tasks:
     - name: "create src {{ item }}"
@@ -11,9 +11,9 @@
         path: "{{ item }}" 
         state: directory
       with_items:
-        - "/home/{{ username }}/repos"
-        - "/home/{{ username }}/.m2"
-        - "/home/{{ username }}/.IdeaIC2017.2"
+        - "{{ src_home }}"
+        - "{{ home }}/.m2"
+        - "{{ home }}/.IdeaIC2017.2"
     - name: update apt-get for sublime
       shell: 'echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list'
     - name: add extra apt-get repositories 
