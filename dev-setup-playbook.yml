@@ -12,6 +12,7 @@
       with_items:
         - /home/vagrant/repos
         - /home/vagrant/.m2
+        - /home/vagrant/.IdeaIC2017.2
     - name: update apt-get for sublime
       shell: 'echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list'
     - name: add extra apt-get repositories 
@@ -41,6 +42,7 @@
         - sublime-text
         - fish
         - openjdk-7-jdk
+        - silversearcher-ag
     - name: extract git
       unarchive:
         src: https://github.com/git/git/archive/v2.14.0.tar.gz 
@@ -53,7 +55,7 @@
     - name: get my git config
       shell: curl https://raw.githubusercontent.com/ethomev/.configuration/master/.gitconfig --create-dirs -o ~/.config/git/config
     - name: get my gitignore file
-      shell: curl https://raw.githubusercontent.com/ethomev/.configuration/master/.gitignore --create-dirs -o ~/.config/git/ignore
+      shell: curl https://raw.githubusercontent.com/ethomev/.configuration/master/ignore --create-dirs -o ~/.config/git/ignore
     - name: get dmitry's fish config
       shell: curl https://raw.githubusercontent.com/dmi3/bin/master/config/fish/config.fish --create-dirs -o ~/.config/fish/config.fish
     - name: download intellij
@@ -71,3 +73,7 @@
       copy:
         src: settings.xml
         dest: "{{ home }}/.m2/settings.xml"
+    - name: intellij config
+      unarchive:
+        src: intellij-config.tar.gz
+        dest: "{{ home }}/.IdeaIC2017.2/"
