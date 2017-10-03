@@ -1,0 +1,22 @@
+---
+- hosts: default
+  user: vagrant
+  tasks:
+    - name: Install libraries with apt
+      apt:
+        name: "{{ item }}"
+        update_cache: yes
+        allow_unauthenticated: yes
+      become: true
+      become_user: root
+      with_items:
+        - xfce4
+        - virtualbox-guest-dkms
+        - virtualbox-guest-utils
+        - virtualbox-guest-x11
+    - name: permit anyone to start the gui
+      shell: "sed -i 's/allowed_users=.*$/allowed_users=anybody/' /etc/X11/Xwrapper.config"
+      become: true
+      become_user: root
+        
+        
