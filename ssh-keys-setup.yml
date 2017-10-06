@@ -1,5 +1,5 @@
 ---
-- hosts: default
+- hosts: localhost
   vars:
     username: vagrant
   user: "{{ username }}" # can I reference this in the tasks so I'm not repeating the user, if all else fails make it a variable
@@ -15,4 +15,5 @@
       become_user: root
     - name: add key to agent
       shell: 'eval "$(ssh-agent -s)"; ssh-add /home/{{ username }}/.ssh/id_rsa;'
+
 
