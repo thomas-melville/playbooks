@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+  user: root
+  tasks:
+    - name: add ansible repository
+      apt_repository:
+        repo: "ppa:ansible/ansible"
+      become: true
+      become_user: root
+    - name: update ansible
+      apt:
+        name: ansible
+        update_cache: yes
+      become: true
+      become_user: root
