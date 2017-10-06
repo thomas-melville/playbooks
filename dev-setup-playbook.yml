@@ -1,5 +1,5 @@
 ---
-- hosts: default # This will change to localhost and I will need to add entry to ansible hosts file
+- hosts: localhost 
   vars:
     username: vagrant
     home: "/home/{{ username }}"
