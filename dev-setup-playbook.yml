@@ -54,12 +54,10 @@
       shell: make; make install
       args:
         chdir: "{{ src_home }}/git-2.14.0"
-    - name: get my git config
-      shell: curl https://raw.githubusercontent.com/ethomev/.configuration/master/.gitconfig --create-dirs -o ~/.config/git/config
-    - name: get my gitignore file
-      shell: curl https://raw.githubusercontent.com/ethomev/.configuration/master/ignore --create-dirs -o ~/.config/git/ignore
-    - name: get dmitry's fish config
-      shell: curl https://raw.githubusercontent.com/dmi3/bin/master/config/fish/config.fish --create-dirs -o ~/.config/fish/config.fish
+    - name: clone my dotfiles
+      git:
+        dest: "{{ home }}/.config"
+        repo: https://github.com/ethomev/.config.git
     - name: download intellij
       unarchive:
         src: https://download.jetbrains.com/idea/ideaIC-2017.2.5.tar.gz # extract version to a variable?
