@@ -44,6 +44,7 @@
         - fish
         - openjdk-7-jdk
         - silversearcher-ag
+        - vim
     - name: extract git
       unarchive:
         src: https://github.com/git/git/archive/v2.14.0.tar.gz 
