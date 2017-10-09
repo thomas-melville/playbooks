@@ -49,7 +49,7 @@
         - virtualbox
     - name: clone git
       git: 
-        dest: "{{ src_home }}"
+        dest: "{{ src_home }}/git"
         repo: https://github.com/git/git.git
         version: v2.14.2
     - name: install latest version
@@ -63,7 +63,6 @@
     - name: source my bashrc file in ~/.bashrc
       shell: 'echo "source $HOME/.config/.bashrc" >> $HOME/.bashrc'
     - name: create symbolic link for my vimrc file
-      shell: 'ln -s $HOME/.config/vim/vimrc $HOME/.vimrc'
       file:
         src: "{{ home }}/.config/vim/vimrc"
         dest: "{{ home }}/.vimrc"
