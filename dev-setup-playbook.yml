@@ -6,7 +6,7 @@
     src_home: "{{ home }}/repos"
   user: "{{ username }}"
   tasks:
-    - name: "create folder {{ item }}"
+    - name: "create folders"
       file: 
         path: "{{ item }}" 
         state: directory
@@ -47,15 +47,15 @@
         - vim
         - vagrant
         - virtualbox
-    - name: extract git # clone git???? what version do I check out?
-      unarchive:
-        src: https://github.com/git/git/archive/v2.14.0.tar.gz 
+    - name: clone git
+      git: 
         dest: "{{ src_home }}"
-        remote_src: yes
+        repo: https://github.com/git/git.git
+        version: v2.14.2
     - name: install latest version
       shell: make; make install
       args:
-        chdir: "{{ src_home }}/git-2.14.0"
+        chdir: "{{ src_home }}/git"
     - name: clone my dotfiles
       git:
         dest: "{{ home }}/.config"
