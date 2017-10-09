@@ -1,12 +1,12 @@
 ---
-- hosts: localhost 
+- hosts: default 
   vars:
     username: vagrant
     home: "/home/{{ username }}"
     src_home: "{{ home }}/repos"
   user: "{{ username }}"
   tasks:
-    - name: "create src {{ item }}"
+    - name: "create folder {{ item }}"
       file: 
         path: "{{ item }}" 
         state: directory
@@ -45,7 +45,9 @@
         - openjdk-7-jdk
         - silversearcher-ag
         - vim
-    - name: extract git
+        - vagrant
+        - virtualbox
+    - name: extract git # clone git???? what version do I check out?
       unarchive:
         src: https://github.com/git/git/archive/v2.14.0.tar.gz 
         dest: "{{ src_home }}"
