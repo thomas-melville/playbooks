@@ -62,6 +62,12 @@
         repo: https://github.com/ethomev/.config.git
     - name: source my bashrc file in ~/.bashrc
       shell: 'echo "source $HOME/.config/.bashrc" >> $HOME/.bashrc'
+    - name: create symbolic link for my vimrc file
+      shell: 'ln -s $HOME/.config/vim/vimrc $HOME/.vimrc'
+      file:
+        src: "{{ home }}/.config/vim/vimrc"
+        dest: "{{ home }}/.vimrc"
+        state: link
     - name: download intellij
       unarchive:
         src: https://download.jetbrains.com/idea/ideaIC-2017.2.5.tar.gz # extract version to a variable?
