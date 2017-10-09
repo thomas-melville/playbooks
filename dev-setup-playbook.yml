@@ -60,6 +60,8 @@
       git:
         dest: "{{ home }}/.config"
         repo: https://github.com/ethomev/.config.git
+    - name: source my bashrc file in ~/.bashrc
+      shell: 'echo "source $HOME/.config/.bashrc" >> $HOME/.bashrc'
     - name: download intellij
       unarchive:
         src: https://download.jetbrains.com/idea/ideaIC-2017.2.5.tar.gz # extract version to a variable?
