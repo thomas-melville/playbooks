@@ -86,3 +86,16 @@
       unarchive:
         src: intellij-config.tar.gz
         dest: "{{ home }}/.IdeaIC2017.2/"
+    - name: update cron with entry to clear .m2/repository once a week
+      cron:
+        name: "clear m2"
+        minute: 0
+        hour: 11
+        weekday: 2
+        job: "rm -rf {{ home }}/.m2/repository/*"
+    - name: update cron with entry to start pidgin every day
+      cron:
+        name: "start pidgin"
+        minute: 30
+        hour: 12
+        job: "DISPLAY=:0 /usr/bin/pidgin"
