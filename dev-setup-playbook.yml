@@ -47,6 +47,7 @@
         - vim
         - vagrant
         - virtualbox
+        - python-pip
     - name: clone git
       git: 
         dest: "{{ src_home }}/git"
