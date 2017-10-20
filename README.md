@@ -6,7 +6,12 @@ These are my playbooks to automate my development environment on my laptop, HP r
 
 the default user the playbooks use is the vagrant user, since I first wrote and tested these on a vagrant vm.
 You can pass your own username in using ther --extra-vars argument
-example: ansible-playbook dev-setup-playbook.yml --extra-vars "username=tom"
+
+example: 
+
+```
+ansible-playbook dev-setup-playbook.yml --extra-vars "username=tom"
+```
 
 ## The order these playbook should be executed in:
 
@@ -14,5 +19,7 @@ example: ansible-playbook dev-setup-playbook.yml --extra-vars "username=tom"
     so that the latest version of ansible is installed on the machine
 2. ssh-keys-setup.yml
     the keys need to be generated first and uploaded to github manually before anything can be cloned.
-3. dev-setup-playbook.yml
-    This is the meat of this repo, it installs everything I need for development
+3. sw-installation.yml
+    this playbook installs all the software I use
+4. sw-configuration.yml
+    this playbook configures a lot of the installed software
