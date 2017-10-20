@@ -12,8 +12,6 @@
         state: directory
       with_items:
         - "{{ src_home }}"
-        - "{{ home }}/.m2"
-        - "{{ home }}/.IdeaIC2017.2"
     - name: update apt-get for sublime
       shell: 'echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list'
     - name: add extra apt-get repositories 
@@ -70,17 +68,6 @@
       shell: make; make install
       args:
         chdir: "{{ src_home }}/git"
-    - name: clone my dotfiles
-      git:
-        dest: "{{ home }}/.config"
-        repo: https://github.com/ethomev/.config.git
-    - name: source my bashrc file in ~/.bashrc
-      shell: 'echo "source $HOME/.config/.bashrc" >> $HOME/.bashrc'
-    - name: create symbolic link for my vimrc file
-      file:
-        src: "{{ home }}/.config/vim/vimrc"
-        dest: "{{ home }}/.vimrc"
-        state: link
     - name: download intellij
       unarchive:
         src: https://download.jetbrains.com/idea/ideaIC-2017.2.5.tar.gz # extract version to a variable?
@@ -88,28 +75,3 @@
         remote_src: yes
       become: true
       become_user: root
-    - name: pull down my notes
-      git:
-        dest: "{{ src_home }}/myNotes"
-        repo: https://github.com/ethomev/myNotes.git 
-    - name: copy settings.xml file for maven
-      copy:
-        src: settings.xml
-        dest: "{{ home }}/.m2/settings.xml"
-    - name: intellij config
-      unarchive:
-        src: intellij-config.tar.gz
-        dest: "{{ home }}/.IdeaIC2017.2/"
-    - name: update cron with entry to clear .m2/repository once a week
-      cron:
-        name: "clear m2"
-        minute: 0
-        hour: 11
-        weekday: 2
-        job: "rm -rf {{ home }}/.m2/repository/*"
-    - name: update cron with entry to start pidgin every day
-      cron:
-        name: "start pidgin"
-        minute: 30
-        hour: 12
-        job: "DISPLAY=:0 /usr/bin/pidgin"

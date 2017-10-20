@@ -72,7 +72,8 @@ Vagrant.configure(2) do |config|
   config.vm.provision "ansible" do |ansible|
     ansible.verbose = "v"
 #    ansible.playbook = "ssh-keys-setup.yml"
-    ansible.playbook = "dev-setup-playbook.yml"
+    ansible.playbook = "sw-installation.yml"
+#    ansible.playbook = "sw-configuration.yml"
 #    ansible.playbook = "configure-gui.yml"
   end
 
