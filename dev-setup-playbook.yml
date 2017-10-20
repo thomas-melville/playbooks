@@ -48,6 +48,19 @@
         - vagrant
         - virtualbox
         - python-pip
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - software-properties-common
+        - docker-ce
+    - name: Add dockers GPG key
+      shell: "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -"
+      become: true
+      become_user: root
+    - name: setup stable repository for docker
+      shell: "add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable'"
+      become: true
+      become_user: root
     - name: clone git
       git: 
         dest: "{{ src_home }}/git"
