@@ -13,6 +13,8 @@
       with_items:
         - "{{ home }}/.m2"
         - "{{ home }}/.IdeaIC2017.2"
+        - "{{ home }}/.vim"
+        - "{{ home }}/.vim/bundle"
     - name: clone my dotfiles
       git:
         dest: "{{ home }}/.config"
@@ -49,3 +51,7 @@
         minute: 30
         hour: 12
         job: "DISPLAY=:0 /usr/bin/pidgin"
+    - name: install vim-gitgutter plugin
+      git:
+        dest: "{{ home }}/.vim/bundle"
+        repo: https://github.com/airblade/vim-gitgutter.git
