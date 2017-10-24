@@ -59,6 +59,7 @@
         - curl
         - software-properties-common
         - docker-ce
+        - tree
     - name: clone git
       git: 
         dest: "{{ src_home }}/git"
@@ -71,6 +72,13 @@
     - name: download intellij
       unarchive:
         src: https://download.jetbrains.com/idea/ideaIC-2017.2.5.tar.gz # extract version to a variable?
+        dest: /opt
+        remote_src: yes
+      become: true
+      become_user: root
+    - name: download spring boot
+      unarchive:
+        src: https://repo.spring.io/release/org/springframework/boot/spring-boot-cli/1.5.8.RELEASE/spring-boot-cli-1.5.8.RELEASE-bin.tar.gz
         dest: /opt
         remote_src: yes
       become: true
