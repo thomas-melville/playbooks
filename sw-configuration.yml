@@ -15,7 +15,6 @@
         - "{{ home }}/.IdeaIC2017.2"
         - "{{ home }}/.vim"
         - "{{ home }}/.vim/bundle"
-        - "{{ home }}/.config/sublime-text-3"
     - name: clone my dotfiles
       git:
         dest: "{{ home }}/.config"
@@ -42,7 +41,7 @@
     - name: sublime config
       unarchive:
         src: sublime-settings.tar.gz
-        dest: "{{ home }}/.config/sublime-text-3/
+        dest: "{{ home }}/.config/"
     - name: update cron with entry to clear .m2/repository once a week
       cron:
         name: "clear m2"
