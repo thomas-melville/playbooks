@@ -59,6 +59,7 @@
         - curl
         - software-properties-common
         - docker-ce
+        - docker-compose
         - tree
     - name: clone git
       git: 
