@@ -41,7 +41,9 @@ Vagrant.configure(2) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  # config.vm.synced_folder "../data", "/vagrant_data"
+  config.vm.synced_folder "/home/ethomev/repos/allure-service", "/home/vagrant/repos/allure-service"
+  config.vm.synced_folder "/home/ethomev/repos/nodeStoreRestService", "/home/vagrant/repos/nodeStoreRestService"
+  config.vm.synced_folder "/home/ethomev/repos/composetest", "/home/vagrant/repos/composetest"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
