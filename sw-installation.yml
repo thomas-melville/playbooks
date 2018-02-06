@@ -61,6 +61,13 @@
         - docker-ce
         - docker-compose
         - tree
+    - name: change owner of repos folder
+      file:
+        path: "{{ src_home }}"
+        owner: "{{ username }}"
+        group: "{{ username }}"
+      become: true
+      become_user: root
     - name: clone git
       git: 
         dest: "{{ src_home }}/git"
