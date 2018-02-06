@@ -19,7 +19,7 @@
     - name: clone my dotfiles
       git:
         dest: "{{ home }}/.config"
-        repo: https://github.com/ethomev/.config.git
+        repo: https://github.com/thomas-melville/.config.git
     - name: source my bashrc file in ~/.bashrc
       shell: 'echo "source $HOME/.config/.bashrc" >> $HOME/.bashrc'
     - name: create symbolic link for my vimrc file
@@ -30,7 +30,7 @@
     - name: pull down my notes
       git:
         dest: "{{ src_home }}/myNotes"
-        repo: https://github.com/ethomev/myNotes.git 
+        repo: https://github.com/thomas-melville/myNotes.git 
     - name: copy settings.xml file for maven
       copy:
         src: settings.xml
