@@ -15,6 +15,7 @@
         - "{{ home }}/.IdeaIC2017.2"
         - "{{ home }}/.vim"
         - "{{ home }}/.vim/bundle"
+        - "{{ src_home }}"
     - name: clone my dotfiles
       git:
         dest: "{{ home }}/.config"
