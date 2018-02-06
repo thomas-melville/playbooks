@@ -79,7 +79,7 @@
         chdir: "{{ src_home }}/git"
     - name: download intellij
       unarchive:
-        src: https://download.jetbrains.com/idea/ideaIC-2017.2.5.tar.gz # extract version to a variable?
+        src: https://download.jetbrains.com/idea/ideaIC-2017.3.4.tar.gz # extract version to a variable?
         dest: /opt
         remote_src: yes
       become: true
