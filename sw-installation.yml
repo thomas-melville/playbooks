@@ -4,6 +4,8 @@
     username: vagrant
     home: "/home/{{ username }}"
     src_home: "{{ home }}/repos"
+    intellij_version: "2018.2.2"
+    git_version: "v2.18.0"
   user: "{{ username }}"
   tasks:
     - name: "create folders"
@@ -12,8 +14,6 @@
         state: directory
       with_items:
         - "{{ src_home }}"
-    - name: update apt-get for sublime
-      shell: 'echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list'
     - name: add extra apt-get repositories 
       apt_repository:
         repo: "{{ item }}"
@@ -21,13 +21,26 @@
       become_user: root
       with_items:
         - 'ppa:fish-shell/release-2'
-        - 'ppa:openjdk-r/ppa'
+        - 'ppa:webupd8team/java'
+        - 'ppa:webupd8team/atom'
     - name: Add dockers GPG key
       shell: "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -"
       become: true
       become_user: root
     - name: setup stable repository for docker
       shell: "add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable'"
+      become: true
+      become_user: root
+    - name: Add Microsoft Visual Studio Code GPG key
+      shell: "curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg"
+      become: true
+      become_user: root
+    - name: setup stable repository for code
+      shell: "add-apt-repository 'deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main'"
+      become: true
+      become_user: root
+    - name: auto accept oracle license for java
+      shell: "echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections; echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections"
       become: true
       become_user: root
     - name: Install libraries with apt
@@ -46,9 +59,7 @@
         - tcl-dev
         - gettext
         - libssl-dev
-        - sublime-text
         - fish
-        - openjdk-7-jdk
         - silversearcher-ag
         - vim
         - vagrant
@@ -61,6 +72,11 @@
         - docker-ce
         - docker-compose
         - tree
+        - apt-transport-https
+        - code
+        - parcellite
+        - atom
+        - oracle-java8-installer
     - name: change owner of repos folder
       file:
         path: "{{ src_home }}"
@@ -72,22 +88,29 @@
       git: 
         dest: "{{ src_home }}/git"
         repo: https://github.com/git/git.git
-        version: v2.14.2
+        version: "{{ git_version }}"
     - name: install latest version
       shell: make; make install
       args:
         chdir: "{{ src_home }}/git"
     - name: download intellij
       unarchive:
-        src: https://download.jetbrains.com/idea/ideaIC-2017.3.4.tar.gz # extract version to a variable?
+        src: "https://download.jetbrains.com/idea/ideaIC-{{ intellij_version }}.tar.gz"
         dest: /opt
         remote_src: yes
       become: true
       become_user: root
-    - name: download spring boot
-      unarchive:
-        src: https://repo.spring.io/release/org/springframework/boot/spring-boot-cli/1.5.8.RELEASE/spring-boot-cli-1.5.8.RELEASE-bin.tar.gz
-        dest: /opt
-        remote_src: yes
+    - name: install kubectl
+      shell: curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+      args:
+        chdir: /usr/local/bin/
+      become: true
+      become_user: root
+    - name: install minikube
+      shell: 'curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo cp minikube /usr/local/bin/ && rm minikube'
+      become: true
+      become_user: root
+    - name: install helm
+      shell: 'curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh && chmod 700 get_helm.sh && ./get_helm.sh'
       become: true
       become_user: root

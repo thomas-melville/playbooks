@@ -12,7 +12,7 @@
         state: directory
       with_items:
         - "{{ home }}/.m2"
-        - "{{ home }}/.IdeaIC2017.2"
+        - "{{ home }}/.IdeaIC2018.2"
         - "{{ home }}/.vim"
         - "{{ home }}/.vim/bundle"
         - "{{ src_home }}"
@@ -20,6 +20,12 @@
       git:
         dest: "{{ home }}/.config"
         repo: https://github.com/thomas-melville/.config.git
+    - name: make kubectl executable
+      shell: chmod +x /usr/local/bin/kubectl
+      become: true
+      become_user: root
+    - name: enable kubectl auto completion
+      shell: 'echo "source <(kubectl completion bash)" >> $HOME/.bashrc'
     - name: source my bashrc file in ~/.bashrc
       shell: 'echo "source $HOME/.config/.bashrc" >> $HOME/.bashrc'
     - name: create symbolic link for my vimrc file
@@ -38,11 +44,7 @@
     - name: intellij config
       unarchive:
         src: intellij-config.tar.gz
-        dest: "{{ home }}/.IdeaIC2017.2/"
-    - name: sublime config
-      unarchive:
-        src: sublime-settings.tar.gz
-        dest: "{{ home }}/.config/"
+        dest: "{{ home }}/.IdeaIC2018.2/"
     - name: update cron with entry to clear .m2/repository once a week
       cron:
         name: "clear m2"
@@ -67,3 +69,10 @@
         group: docker
       become: true
       become_user: root
+# doing this inside a vm proves problematic
+#    - name: configure minikube
+#      shell: 'minikube start'
+#    - name: configure helm
+#      shell: 'helm init'
+    - name: install atom plugin
+      shell: 'apm install api-workbench'
