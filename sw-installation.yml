@@ -77,6 +77,7 @@
         - parcellite
         - atom
         - oracle-java8-installer
+        - npm
     - name: change owner of repos folder
       file:
         path: "{{ src_home }}"
@@ -112,5 +113,9 @@
       become_user: root
     - name: install helm
       shell: 'curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh && chmod 700 get_helm.sh && ./get_helm.sh'
+      become: true
+      become_user: root
+    - name: install npm packages
+      shell: 'npm install -g tldr'
       become: true
       become_user: root
