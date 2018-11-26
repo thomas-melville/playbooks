@@ -41,6 +41,8 @@
       copy:
         src: settings.xml
         dest: "{{ home }}/.m2/settings.xml"
+    - name: update fzf
+      shell: update-fzf
     - name: intellij config
       unarchive:
         src: intellij-config.tar.gz
@@ -52,12 +54,6 @@
         hour: 11
         weekday: 2
         job: "rm -rf {{ home }}/.m2/repository/*"
-    - name: update cron with entry to start pidgin every day
-      cron:
-        name: "start pidgin"
-        minute: 30
-        hour: 12
-        job: "DISPLAY=:0 /usr/bin/pidgin"
     - name: install vim-gitgutter plugin
       git:
         dest: "{{ home }}/.vim/bundle"
