@@ -2,6 +2,7 @@
 - hosts: localhost
   vars:
     username: vagrant
+    group: "{{ username }}"
     home: "/home/{{ username }}"
     src_home: "{{ home }}/repos"
     intellij_version: "2018.3"
@@ -12,6 +13,8 @@
       file: 
         path: "{{ item }}" 
         state: directory
+        owner: "{{ username }}"
+        group: "{{ group }}"
       with_items:
         - "{{ src_home }}"
     - name: add extra apt-get repositories 
@@ -80,13 +83,6 @@
         - npm
     - name: Install pycharm
       shell: snap install pycharm-community --classic
-      become: true
-      become_user: root
-    - name: change owner of repos folder
-      file:
-        path: "{{ src_home }}"
-        owner: "{{ username }}"
-        group: "{{ username }}"
       become: true
       become_user: root
     - name: clone git

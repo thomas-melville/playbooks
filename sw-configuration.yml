@@ -2,6 +2,7 @@
 - hosts: locahost
   vars:
     username: vagrant
+    group: "{{ username }}"
     home: "/home/{{ username }}"
     src_home: "{{ home }}/repos"
   user: "{{ username }}"
@@ -10,6 +11,8 @@
       file: 
         path: "{{ item }}" 
         state: directory
+        owner: "{{ username }}"
+        group: "{{ group }}"
       with_items:
         - "{{ home }}/.m2"
         - "{{ home }}/.IdeaIC2018.2"
