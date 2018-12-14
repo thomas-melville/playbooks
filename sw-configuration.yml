@@ -1,5 +1,5 @@
 ---
-- hosts: default 
+- hosts: locahost
   vars:
     username: vagrant
     home: "/home/{{ username }}"
