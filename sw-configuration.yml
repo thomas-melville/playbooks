@@ -44,8 +44,6 @@
       copy:
         src: settings.xml
         dest: "{{ home }}/.m2/settings.xml"
-    - name: update fzf
-      shell: update-fzf
     - name: intellij config
       unarchive:
         src: intellij-config.tar.gz
