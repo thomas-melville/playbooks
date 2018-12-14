@@ -78,6 +78,10 @@
         - atom
         - oracle-java8-installer
         - npm
+    - name: Install pycharm
+      shell: snap install pycharm-community --classic
+      become: true
+      become_user: root
     - name: change owner of repos folder
       file:
         path: "{{ src_home }}"
