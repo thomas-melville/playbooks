@@ -1,10 +1,11 @@
 ---
-- hosts: locahost
+- hosts: default
   vars:
     username: vagrant
     group: "{{ username }}"
     home: "/home/{{ username }}"
     src_home: "{{ home }}/repos"
+    intellij_version: "IdeaIC2021.3"
   user: "{{ username }}"
   tasks:
     - name: "create folders"
@@ -15,7 +16,7 @@
         group: "{{ group }}"
       with_items:
         - "{{ home }}/.m2"
-        - "{{ home }}/.IdeaIC2018.2"
+        - "{{ home }}/.{{ intellij_version }}"
         - "{{ home }}/.vim"
         - "{{ home }}/.vim/bundle"
         - "{{ src_home }}"
@@ -47,7 +48,7 @@
     - name: intellij config
       unarchive:
         src: intellij-config.tar.gz
-        dest: "{{ home }}/.IdeaIC2018.2/"
+        dest: "{{ home }}/.{{ intellij_version }}/"
     - name: update cron with entry to clear .m2/repository once a week
       cron:
         name: "clear m2"
@@ -67,8 +68,6 @@
       become: true
       become_user: root
 # doing this inside a vm proves problematic
-#    - name: configure minikube
-#      shell: 'minikube start'
 #    - name: configure helm
 #      shell: 'helm init'
     - name: install atom plugin

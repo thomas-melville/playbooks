@@ -12,7 +12,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "puphpet/ubuntu1604-x64"
+  config.vm.box = "generic/ubuntu2004"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -41,9 +41,7 @@ Vagrant.configure(2) do |config|
   # the path on the host to the actual folder. The second argument is
   # the path on the guest to mount the folder. And the optional third
   # argument is a set of non-required options.
-  config.vm.synced_folder "/home/ethomev/repos/allure-service", "/home/vagrant/repos/allure-service"
-  config.vm.synced_folder "/home/ethomev/repos/nodeStoreRestService", "/home/vagrant/repos/nodeStoreRestService"
-  config.vm.synced_folder "/home/ethomev/repos/composetest", "/home/vagrant/repos/composetest"
+  # config.vm.synced_folder "/home/ethomev/repos/nodeStoreRestService", "/home/vagrant/repos/nodeStoreRestService"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -77,8 +75,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "ansible" do |ansible|
     ansible.verbose = "v"
-    ansible.playbook = "ansible/setup-jenkins-slaves.yml"
-#    ansible.playbook = "sw-installation.yml"
+    ansible.playbook = "sw-configuration.yml"
 #    ansible.playbook = "sw-configuration.yml"
 #    ansible.playbook = "configure-gui.yml"
   end

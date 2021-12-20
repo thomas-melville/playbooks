@@ -5,8 +5,7 @@
     group: "{{ username }}"
     home: "/home/{{ username }}"
     src_home: "{{ home }}/repos"
-    intellij_version: "2018.3"
-    git_version: "v2.19.2"
+    git_version: "v2.34.1"
   user: "{{ username }}"
   tasks:
     - name: "create folders"
@@ -23,9 +22,8 @@
       become: true
       become_user: root
       with_items:
-        - 'ppa:fish-shell/release-2'
-        - 'ppa:webupd8team/java'
-        - 'ppa:webupd8team/atom'
+        - 'ppa:fish-shell/release-3'
+        - 'ppa:linuxuprising/java'
     - name: Add dockers GPG key
       shell: "curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -"
       become: true
@@ -43,7 +41,7 @@
       become: true
       become_user: root
     - name: auto accept oracle license for java
-      shell: "echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections; echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections"
+      shell: "echo debconf shared/accepted-oracle-license-v1-3 select true | debconf-set-selections; echo debconf shared/accepted-oracle-license-v1-3 seen true | debconf-set-selections"
       become: true
       become_user: root
     - name: Install libraries with apt
@@ -67,7 +65,7 @@
         - vim
         - vagrant
         - virtualbox
-        - python-pip
+        - python3-pip
         - apt-transport-https
         - ca-certificates
         - curl
@@ -78,19 +76,20 @@
         - apt-transport-https
         - code
         - parcellite
-        - atom
-        - oracle-java8-installer
+        - openjdk-8-jdk
         - npm
-        - oracle-java11-installer
+        - openjdk-11-jdk
         - vagrant
-    - name: Install pycharm
-      shell: snap install pycharm-community --classic
+        - oracle-java17-installer
+    - name: Install Jetbrains software
+      shell: snap install {{ item }} --classic
       become: true
       become_user: root
-    - name: Install spotify
-      shell: snap install spotify
-      become: true
-      become_user: root
+      with_items:
+        - pycharm-community
+        - intellij-idea-community
+        - atom
+        - spotify
     - name: clone git
       git:
         dest: "{{ src_home }}/git"
@@ -100,21 +99,10 @@
       shell: make; make install
       args:
         chdir: "{{ src_home }}/git"
-    - name: download intellij
-      unarchive:
-        src: "https://download.jetbrains.com/idea/ideaIC-{{ intellij_version }}.tar.gz"
-        dest: /opt
-        remote_src: yes
-      become: true
-      become_user: root
     - name: install kubectl
       shell: curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
       args:
         chdir: /usr/local/bin/
-      become: true
-      become_user: root
-    - name: install minikube
-      shell: 'curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube && sudo cp minikube /usr/local/bin/ && rm minikube'
       become: true
       become_user: root
     - name: install helm
