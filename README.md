@@ -7,10 +7,10 @@ These are my playbooks to automate my development environment on my laptop, HP r
 The default user the playbooks use is the vagrant user, since I first wrote and tested these on a vagrant vm.
 You can pass your own username in using the --extra-vars argument
 
-example: 
+example:
 
 ```
-ansible-playbook dev-setup-playbook.yml --extra-vars "username=tom"
+ansible-playbook sw-installation.yml --extra-vars "username=tom"
 ```
 
 ## The order these playbook should be executed in:

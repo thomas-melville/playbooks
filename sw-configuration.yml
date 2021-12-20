@@ -8,8 +8,8 @@
   user: "{{ username }}"
   tasks:
     - name: "create folders"
-      file: 
-        path: "{{ item }}" 
+      file:
+        path: "{{ item }}"
         state: directory
         owner: "{{ username }}"
         group: "{{ group }}"
@@ -39,7 +39,7 @@
     - name: pull down my notes
       git:
         dest: "{{ src_home }}/myNotes"
-        repo: https://github.com/thomas-melville/myNotes.git 
+        repo: https://github.com/thomas-melville/myNotes.git
     - name: copy settings.xml file for maven
       copy:
         src: settings.xml

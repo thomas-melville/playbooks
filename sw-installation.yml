@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: default
   vars:
     username: vagrant
     group: "{{ username }}"
@@ -10,14 +10,14 @@
   user: "{{ username }}"
   tasks:
     - name: "create folders"
-      file: 
-        path: "{{ item }}" 
+      file:
+        path: "{{ item }}"
         state: directory
         owner: "{{ username }}"
         group: "{{ group }}"
       with_items:
         - "{{ src_home }}"
-    - name: add extra apt-get repositories 
+    - name: add extra apt-get repositories
       apt_repository:
         repo: "{{ item }}"
       become: true
@@ -47,7 +47,7 @@
       become: true
       become_user: root
     - name: Install libraries with apt
-      apt: 
+      apt:
         name: "{{ item }}"
         update_cache: yes
         allow_unauthenticated: yes
@@ -55,7 +55,7 @@
       become_user: root
       with_items:
         - maven
-        - default-jdk 
+        - default-jdk
         - git
         - libcurl4-openssl-dev
         - libexpat1-dev
@@ -81,12 +81,18 @@
         - atom
         - oracle-java8-installer
         - npm
+        - oracle-java11-installer
+        - vagrant
     - name: Install pycharm
       shell: snap install pycharm-community --classic
       become: true
       become_user: root
+    - name: Install spotify
+      shell: snap install spotify
+      become: true
+      become_user: root
     - name: clone git
-      git: 
+      git:
         dest: "{{ src_home }}/git"
         repo: https://github.com/git/git.git
         version: "{{ git_version }}"

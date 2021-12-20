@@ -77,11 +77,11 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "ansible" do |ansible|
     ansible.verbose = "v"
-#    ansible.playbook = "ssh-keys-setup.yml"
-    ansible.playbook = "sw-installation.yml"
+    ansible.playbook = "ansible/setup-jenkins-slaves.yml"
+#    ansible.playbook = "sw-installation.yml"
 #    ansible.playbook = "sw-configuration.yml"
 #    ansible.playbook = "configure-gui.yml"
   end
 
-  config.ssh.forward_x11 = true
+#  config.ssh.forward_x11 = true
 end
