@@ -82,6 +82,7 @@
         - vagrant
         - oracle-java17-installer
         - snapd
+        - apache2-utils
     - name: Install Jetbrains software
       shell: snap install {{ item }} --classic
       become: true
@@ -107,7 +108,7 @@
       become: true
       become_user: root
     - name: install helm
-      shell: 'curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh && chmod 700 get_helm.sh && ./get_helm.sh'
+      shell: 'curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 && chmod 700 get_helm.sh && ./get_helm.sh'
       become: true
       become_user: root
     - name: install npm packages
