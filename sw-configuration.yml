@@ -1,8 +1,9 @@
 ---
-- hosts: default
+- hosts: localhost
+  connection: local
   vars:
     username: vagrant
-    group: "{{ username }}"
+    group: "{{ usergroup }}"
     home: "/home/{{ username }}"
     src_home: "{{ home }}/repos"
     intellij_version: "IdeaIC2021.3"
@@ -61,10 +62,7 @@
         dest: "{{ home }}/.vim/bundle"
         repo: https://github.com/airblade/vim-gitgutter.git
     - name: add user to docker group
-      user:
-        name: "{{ username }}"
-        append: yes
-        group: docker
+      shell: "usermod -aG docker {{ username }}"
       become: true
       become_user: root
 # doing this inside a vm proves problematic

@@ -1,5 +1,6 @@
 ---
-- hosts: default
+- hosts: localhost
+  connection: local
   user: root
   tasks:
     - name: add ansible repository

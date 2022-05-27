@@ -1,11 +1,12 @@
 ---
-- hosts: default
+- hosts: localhost
+  connection: local
   vars:
     username: vagrant
-    group: "{{ username }}"
+    group: "{{ usergroup }}"
     home: "/home/{{ username }}"
     src_home: "{{ home }}/repos"
-    git_version: "v2.34.1"
+    git_version: "v2.36.1"
   user: "{{ username }}"
   tasks:
     - name: "create folders"
@@ -70,7 +71,6 @@
         - ca-certificates
         - curl
         - software-properties-common
-        - docker-ce
         - docker-compose
         - tree
         - apt-transport-https
@@ -81,6 +81,7 @@
         - openjdk-11-jdk
         - vagrant
         - oracle-java17-installer
+        - snapd
     - name: Install Jetbrains software
       shell: snap install {{ item }} --classic
       become: true

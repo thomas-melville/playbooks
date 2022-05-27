@@ -6,6 +6,13 @@ These are my playbooks to automate my development environment on my laptop, HP r
 
 The default user the playbooks use is the vagrant user, since I first wrote and tested these on a vagrant vm.
 
+### variables
+
+* username
+* usergroup
+* git_version
+* intellij_version
+
 You can pass your own username in using the --extra-vars argument
 
 example:
