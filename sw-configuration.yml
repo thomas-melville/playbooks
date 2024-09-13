@@ -1,6 +1,6 @@
 ---
-- hosts: localhost
-  connection: local
+- hosts: all
+  # connection: local
   vars:
     username: vagrant
     group: "{{ usergroup }}"
@@ -38,6 +38,7 @@
         src: "{{ home }}/.config/vim/vimrc"
         dest: "{{ home }}/.vimrc"
         state: link
+        force: yes
     - name: pull down my notes
       git:
         dest: "{{ src_home }}/myNotes"

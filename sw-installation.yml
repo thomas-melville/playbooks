@@ -1,12 +1,53 @@
 ---
-- hosts: localhost
-  connection: local
+- hosts: all
+  # connection: local # This runs the playbook on the local machine not in the vagrant vm
   vars:
-    username: vagrant
+    username: "vagrant"
     group: "{{ usergroup }}"
     home: "/home/{{ username }}"
     src_home: "{{ home }}/repos"
-    git_version: "v2.36.1"
+    git_version: "v2.38.1"
+    apt_packages_to_install:
+    - maven
+    - default-jdk
+    - git
+    - libcurl4-openssl-dev
+    - libexpat1-dev
+    - tcl-dev
+    - gettext
+    - libssl-dev
+    - fish
+    - silversearcher-ag
+    - vim
+    - vagrant
+    - virtualbox
+    - python3-pip
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - software-properties-common
+    - docker-compose
+    - tree
+    - apt-transport-https
+    - code
+    - parcellite
+    - openjdk-8-jdk
+    - npm
+    - openjdk-11-jdk
+    - vagrant
+    - oracle-java17-installer
+    - snapd
+    - apache2-utils
+    - mlocate
+    - xclip
+    snap_packages_to_install:
+    - pycharm-community
+    - intellij-idea-community
+    # - atom
+    - spotify
+    - drawio
+    - yq
+    - go
   user: "{{ username }}"
   tasks:
     - name: "create folders"
@@ -47,51 +88,19 @@
       become_user: root
     - name: Install libraries with apt
       apt:
-        name: "{{ item }}"
-        update_cache: yes
+        name: "{{ apt_packages_to_install }}"
+        state: present
+        # update_cache: yes
         allow_unauthenticated: yes
       become: true
       become_user: root
-      with_items:
-        - maven
-        - default-jdk
-        - git
-        - libcurl4-openssl-dev
-        - libexpat1-dev
-        - tcl-dev
-        - gettext
-        - libssl-dev
-        - fish
-        - silversearcher-ag
-        - vim
-        - vagrant
-        - virtualbox
-        - python3-pip
-        - apt-transport-https
-        - ca-certificates
-        - curl
-        - software-properties-common
-        - docker-compose
-        - tree
-        - apt-transport-https
-        - code
-        - parcellite
-        - openjdk-8-jdk
-        - npm
-        - openjdk-11-jdk
-        - vagrant
-        - oracle-java17-installer
-        - snapd
-        - apache2-utils
-    - name: Install Jetbrains software
-      shell: snap install {{ item }} --classic
+    - name: Install software with snap
+      snap:
+        name: "{{ snap_packages_to_install }}"
+        state: present
+        classic: yes
       become: true
       become_user: root
-      with_items:
-        - pycharm-community
-        - intellij-idea-community
-        - atom
-        - spotify
     - name: clone git
       git:
         dest: "{{ src_home }}/git"
@@ -115,3 +124,8 @@
       shell: 'npm install -g tldr'
       become: true
       become_user: root
+    # Wont work inside the VM as it doesn't have access to internal network
+    # - name: install eke
+    #   shell: 'curl -O https://www.rnd.gic.ericsson.se/release/latest/eke/bin/linux/amd64/eke && chmod 755 eke && mv eke /usr/local/bin'
+    #   become: true
+    #   become_user: root
