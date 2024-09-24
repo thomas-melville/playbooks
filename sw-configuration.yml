@@ -6,7 +6,7 @@
     group: "{{ usergroup }}"
     home: "/home/{{ username }}"
     src_home: "{{ home }}/repos"
-    intellij_version: "IdeaIC2021.3"
+    intellij_version: "IdeaIC2024.1"
   user: "{{ username }}"
   tasks:
     - name: "create folders"
@@ -66,8 +66,3 @@
       shell: "usermod -aG docker {{ username }}"
       become: true
       become_user: root
-# doing this inside a vm proves problematic
-#    - name: configure helm
-#      shell: 'helm init'
-    - name: install atom plugin
-      shell: 'apm install api-workbench'
